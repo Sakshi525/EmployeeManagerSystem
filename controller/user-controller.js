@@ -1,8 +1,11 @@
 const express = require('express');
 const session = require('express-session');
+require('dotenv').config()
 const User = require('../models/user-model')
 const bcrypt = require('bcrypt');
 const app = express();
+const jwt = require('jsonwebtoken');
+const secretToken = process.env.SECRET_TOKEN
 app.use(express.json());
 
 app.use(session({ secret: 'testing', resave: false, saveUninitialized: true, cookie: { secure: true } }));
@@ -38,9 +41,9 @@ exports.login = async (req, res) => {
         const { email, password } = req.body;
         const user = await User.findOne({ email });
         if (user && bcrypt.compare(password, user.password)) {
-            req.session.user = user;
-            console.log('req.session --->', req.session);
-            res.send(' login succcessfully');
+            const token = jwt.sign(user, secretToken, )
+            console.log('token', token)
+            res.send({msg :' login succcessfully', token});
         } else {
             res.send('Invalid login credentials');
         }

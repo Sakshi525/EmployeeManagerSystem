@@ -16,6 +16,7 @@ app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
 });
 
+
 // MongoDB Atlas connection string (replace with your actual connection string)
 const mongoDBURI = 'mongodb+srv://sakshit:Testing123@cluster0.dyf85ax.mongodb.net/Task?retryWrites=true&w=majority';
 
@@ -35,7 +36,6 @@ mongoose.connection.on('error', (err) => {
 mongoose.connection.once('open', () => {
     console.log('Connected to MongoDB');
 });
-
 // Use URL-encoded parsing middleware
 app.use(express.urlencoded({ extended: true }));
 
